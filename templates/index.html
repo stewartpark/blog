@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% for notebook in notebooks %}
+<a href="{{ notebook.path }}" class="header">
+  <img src="{{ notebook.cover }}" alt="{{ notebook.title }}" />
+  <div class="title">{{ notebook.title }} ({{ notebook.date.strftime('%Y-%m-%d') }})</div>
+</a>
+{% endfor %}
+{% endblock %}

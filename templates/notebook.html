@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block title %}{{ notebook.title }} | {{ super() }}{% endblock %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/richleland/pygments-css/master/friendly.css" />
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style type="text/css">
+ .cell .input, .cell .output_area { display: flex; flex-wrap: nowrap; }
+ .cell .prompt { flex-basis: 70px; min-width: 70px; text-align: right; padding-right: 10px; font-family: monospace; }
+ .cell .inner_cell { flex-basis: auto; width: 100%; }
+ .cell .output_html { width: auto; }
+
+ .cell .input .prompt { color: #303F9F; }
+ .cell .output_area .prompt { color: #D84315; }
+
+ .celltag_hidden { display: none; }
+ .celltag_input_hidden > .input { display: none; }
+ .celltag_output_hidden > .output_wrapper { display: none; }
+ .notebook {
+   padding: 20px;
+ }
+ #disqus_thread { margin: 20px; }
+</style>
+<a class="header" href="{{ notebook.path }}">
+  <img src="{{ notebook.cover }}" alt="{{ notebook.title }}" />
+  <div class="title">{{ notebook.title }} ({{ notebook.date.strftime('%Y-%m-%d') }})</div>
+</a>
+<div class="notebook">
+  {{ notebook.html | safe }}
+  <script>
+   // HACK: table CSS fix for pandas
+   $('table.dataframe').addClass('table').addClass('table-sm').addClass('table-striped').addClass('table-hover');
+   $('table.dataframe thead').addClass('thead-light');
+  </script>
+</div>
+<!-- Disqus -->
+<div id="disqus_thread"></div>
+<script>
+
+ /**
+  *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+  *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+ /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+  */
+ (function() { // DON'T EDIT BELOW THIS LINE
+   var d = document, s = d.createElement('script');
+   s.src = 'https://stewartpark.disqus.com/embed.js';
+   s.setAttribute('data-timestamp', +new Date());
+   (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+{% endblock %}
