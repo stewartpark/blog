@@ -247,7 +247,7 @@
         <span class="p">(</span><span class="n">x_</span><span class="p">,</span> <span class="n">get_adjusted_sum</span><span class="p">(</span><span class="n">x_</span><span class="p">))</span> 
         <span class="k">for</span> <span class="n">x_</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">get_all_combinations</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">)),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
     <span class="p">],</span>
-    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Slice Combination&quot;</span><span class="p">,</span> <span class="s2">&quot;Adjusted Sum&quot;</span><span class="p">]</span>
+    <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Slice Combination&quot;</span><span class="p">,</span> <span class="s2">&quot;Sum of Adjusted Sums&quot;</span><span class="p">]</span>
 <span class="p">)</span>
 
 <span class="k">def</span> <span class="nf">hl</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
@@ -273,78 +273,78 @@
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 <style  type="text/css" >
-    #T_86d8c042_ae30_11ea_8129_d0c637cc6861row0_col0 {
+    #T_b3237408_ae71_11ea_af8a_d0c637cc6861row0_col0 {
             color:  unset;
-        }    #T_86d8c042_ae30_11ea_8129_d0c637cc6861row0_col1 {
+        }    #T_b3237408_ae71_11ea_af8a_d0c637cc6861row0_col1 {
             color:  unset;
-        }    #T_86d8c042_ae30_11ea_8129_d0c637cc6861row1_col0 {
+        }    #T_b3237408_ae71_11ea_af8a_d0c637cc6861row1_col0 {
             color:  unset;
-        }    #T_86d8c042_ae30_11ea_8129_d0c637cc6861row1_col1 {
+        }    #T_b3237408_ae71_11ea_af8a_d0c637cc6861row1_col1 {
             color:  unset;
-        }    #T_86d8c042_ae30_11ea_8129_d0c637cc6861row2_col0 {
+        }    #T_b3237408_ae71_11ea_af8a_d0c637cc6861row2_col0 {
             color:  unset;
-        }    #T_86d8c042_ae30_11ea_8129_d0c637cc6861row2_col1 {
+        }    #T_b3237408_ae71_11ea_af8a_d0c637cc6861row2_col1 {
             color:  unset;
-        }    #T_86d8c042_ae30_11ea_8129_d0c637cc6861row3_col0 {
+        }    #T_b3237408_ae71_11ea_af8a_d0c637cc6861row3_col0 {
             color:  unset;
-        }    #T_86d8c042_ae30_11ea_8129_d0c637cc6861row3_col1 {
+        }    #T_b3237408_ae71_11ea_af8a_d0c637cc6861row3_col1 {
             color:  unset;
-        }    #T_86d8c042_ae30_11ea_8129_d0c637cc6861row4_col0 {
+        }    #T_b3237408_ae71_11ea_af8a_d0c637cc6861row4_col0 {
             color:  unset;
-        }    #T_86d8c042_ae30_11ea_8129_d0c637cc6861row4_col1 {
+        }    #T_b3237408_ae71_11ea_af8a_d0c637cc6861row4_col1 {
             color:  unset;
-        }    #T_86d8c042_ae30_11ea_8129_d0c637cc6861row5_col0 {
+        }    #T_b3237408_ae71_11ea_af8a_d0c637cc6861row5_col0 {
             color:  unset;
-        }    #T_86d8c042_ae30_11ea_8129_d0c637cc6861row5_col1 {
+        }    #T_b3237408_ae71_11ea_af8a_d0c637cc6861row5_col1 {
             color:  unset;
-        }    #T_86d8c042_ae30_11ea_8129_d0c637cc6861row6_col0 {
+        }    #T_b3237408_ae71_11ea_af8a_d0c637cc6861row6_col0 {
             color:  red;
-        }    #T_86d8c042_ae30_11ea_8129_d0c637cc6861row6_col1 {
+        }    #T_b3237408_ae71_11ea_af8a_d0c637cc6861row6_col1 {
             color:  red;
-        }    #T_86d8c042_ae30_11ea_8129_d0c637cc6861row7_col0 {
+        }    #T_b3237408_ae71_11ea_af8a_d0c637cc6861row7_col0 {
             color:  unset;
-        }    #T_86d8c042_ae30_11ea_8129_d0c637cc6861row7_col1 {
+        }    #T_b3237408_ae71_11ea_af8a_d0c637cc6861row7_col1 {
             color:  unset;
-        }</style><table id="T_86d8c042_ae30_11ea_8129_d0c637cc6861" ><thead>    <tr>        <th class="blank level0" ></th>        <th class="col_heading level0 col0" >Slice Combination</th>        <th class="col_heading level0 col1" >Adjusted Sum</th>    </tr></thead><tbody>
+        }</style><table id="T_b3237408_ae71_11ea_af8a_d0c637cc6861" ><thead>    <tr>        <th class="blank level0" ></th>        <th class="col_heading level0 col0" >Slice Combination</th>        <th class="col_heading level0 col1" >Sum of Adjusted Sums</th>    </tr></thead><tbody>
                 <tr>
-                        <th id="T_86d8c042_ae30_11ea_8129_d0c637cc6861level0_row0" class="row_heading level0 row0" >0</th>
-                        <td id="T_86d8c042_ae30_11ea_8129_d0c637cc6861row0_col0" class="data row0 col0" >[(2, 2, 3, 4)]</td>
-                        <td id="T_86d8c042_ae30_11ea_8129_d0c637cc6861row0_col1" class="data row0 col1" >-31</td>
+                        <th id="T_b3237408_ae71_11ea_af8a_d0c637cc6861level0_row0" class="row_heading level0 row0" >0</th>
+                        <td id="T_b3237408_ae71_11ea_af8a_d0c637cc6861row0_col0" class="data row0 col0" >[(2, 2, 3, 4)]</td>
+                        <td id="T_b3237408_ae71_11ea_af8a_d0c637cc6861row0_col1" class="data row0 col1" >-31</td>
             </tr>
             <tr>
-                        <th id="T_86d8c042_ae30_11ea_8129_d0c637cc6861level0_row1" class="row_heading level0 row1" >1</th>
-                        <td id="T_86d8c042_ae30_11ea_8129_d0c637cc6861row1_col0" class="data row1 col0" >[(2,), (2, 3, 4)]</td>
-                        <td id="T_86d8c042_ae30_11ea_8129_d0c637cc6861row1_col1" class="data row1 col1" >-15</td>
+                        <th id="T_b3237408_ae71_11ea_af8a_d0c637cc6861level0_row1" class="row_heading level0 row1" >1</th>
+                        <td id="T_b3237408_ae71_11ea_af8a_d0c637cc6861row1_col0" class="data row1 col0" >[(2,), (2, 3, 4)]</td>
+                        <td id="T_b3237408_ae71_11ea_af8a_d0c637cc6861row1_col1" class="data row1 col1" >-15</td>
             </tr>
             <tr>
-                        <th id="T_86d8c042_ae30_11ea_8129_d0c637cc6861level0_row2" class="row_heading level0 row2" >2</th>
-                        <td id="T_86d8c042_ae30_11ea_8129_d0c637cc6861row2_col0" class="data row2 col0" >[(2, 2), (3, 4)]</td>
-                        <td id="T_86d8c042_ae30_11ea_8129_d0c637cc6861row2_col1" class="data row2 col1" >5</td>
+                        <th id="T_b3237408_ae71_11ea_af8a_d0c637cc6861level0_row2" class="row_heading level0 row2" >2</th>
+                        <td id="T_b3237408_ae71_11ea_af8a_d0c637cc6861row2_col0" class="data row2 col0" >[(2, 2), (3, 4)]</td>
+                        <td id="T_b3237408_ae71_11ea_af8a_d0c637cc6861row2_col1" class="data row2 col1" >5</td>
             </tr>
             <tr>
-                        <th id="T_86d8c042_ae30_11ea_8129_d0c637cc6861level0_row3" class="row_heading level0 row3" >3</th>
-                        <td id="T_86d8c042_ae30_11ea_8129_d0c637cc6861row3_col0" class="data row3 col0" >[(2, 2, 3), (4,)]</td>
-                        <td id="T_86d8c042_ae30_11ea_8129_d0c637cc6861row3_col1" class="data row3 col1" >5</td>
+                        <th id="T_b3237408_ae71_11ea_af8a_d0c637cc6861level0_row3" class="row_heading level0 row3" >3</th>
+                        <td id="T_b3237408_ae71_11ea_af8a_d0c637cc6861row3_col0" class="data row3 col0" >[(2, 2, 3), (4,)]</td>
+                        <td id="T_b3237408_ae71_11ea_af8a_d0c637cc6861row3_col1" class="data row3 col1" >5</td>
             </tr>
             <tr>
-                        <th id="T_86d8c042_ae30_11ea_8129_d0c637cc6861level0_row4" class="row_heading level0 row4" >4</th>
-                        <td id="T_86d8c042_ae30_11ea_8129_d0c637cc6861row4_col0" class="data row4 col0" >[(2,), (2,), (3, 4)]</td>
-                        <td id="T_86d8c042_ae30_11ea_8129_d0c637cc6861row4_col1" class="data row4 col1" >-7</td>
+                        <th id="T_b3237408_ae71_11ea_af8a_d0c637cc6861level0_row4" class="row_heading level0 row4" >4</th>
+                        <td id="T_b3237408_ae71_11ea_af8a_d0c637cc6861row4_col0" class="data row4 col0" >[(2,), (2,), (3, 4)]</td>
+                        <td id="T_b3237408_ae71_11ea_af8a_d0c637cc6861row4_col1" class="data row4 col1" >-7</td>
             </tr>
             <tr>
-                        <th id="T_86d8c042_ae30_11ea_8129_d0c637cc6861level0_row5" class="row_heading level0 row5" >5</th>
-                        <td id="T_86d8c042_ae30_11ea_8129_d0c637cc6861row5_col0" class="data row5 col0" >[(2,), (2, 3), (4,)]</td>
-                        <td id="T_86d8c042_ae30_11ea_8129_d0c637cc6861row5_col1" class="data row5 col1" >5</td>
+                        <th id="T_b3237408_ae71_11ea_af8a_d0c637cc6861level0_row5" class="row_heading level0 row5" >5</th>
+                        <td id="T_b3237408_ae71_11ea_af8a_d0c637cc6861row5_col0" class="data row5 col0" >[(2,), (2, 3), (4,)]</td>
+                        <td id="T_b3237408_ae71_11ea_af8a_d0c637cc6861row5_col1" class="data row5 col1" >5</td>
             </tr>
             <tr>
-                        <th id="T_86d8c042_ae30_11ea_8129_d0c637cc6861level0_row6" class="row_heading level0 row6" >6</th>
-                        <td id="T_86d8c042_ae30_11ea_8129_d0c637cc6861row6_col0" class="data row6 col0" >[(2, 2), (3,), (4,)]</td>
-                        <td id="T_86d8c042_ae30_11ea_8129_d0c637cc6861row6_col1" class="data row6 col1" >9</td>
+                        <th id="T_b3237408_ae71_11ea_af8a_d0c637cc6861level0_row6" class="row_heading level0 row6" >6</th>
+                        <td id="T_b3237408_ae71_11ea_af8a_d0c637cc6861row6_col0" class="data row6 col0" >[(2, 2), (3,), (4,)]</td>
+                        <td id="T_b3237408_ae71_11ea_af8a_d0c637cc6861row6_col1" class="data row6 col1" >9</td>
             </tr>
             <tr>
-                        <th id="T_86d8c042_ae30_11ea_8129_d0c637cc6861level0_row7" class="row_heading level0 row7" >7</th>
-                        <td id="T_86d8c042_ae30_11ea_8129_d0c637cc6861row7_col0" class="data row7 col0" >[(2,), (2,), (3,), (4,)]</td>
-                        <td id="T_86d8c042_ae30_11ea_8129_d0c637cc6861row7_col1" class="data row7 col1" >-3</td>
+                        <th id="T_b3237408_ae71_11ea_af8a_d0c637cc6861level0_row7" class="row_heading level0 row7" >7</th>
+                        <td id="T_b3237408_ae71_11ea_af8a_d0c637cc6861row7_col0" class="data row7 col0" >[(2,), (2,), (3,), (4,)]</td>
+                        <td id="T_b3237408_ae71_11ea_af8a_d0c637cc6861row7_col1" class="data row7 col1" >-3</td>
             </tr>
     </tbody></table>
 </div>
@@ -399,8 +399,8 @@
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 88 µs, sys: 0 ns, total: 88 µs
-Wall time: 97 µs
+<pre>CPU times: user 19 µs, sys: 6 µs, total: 25 µs
+Wall time: 27.7 µs
 </pre>
 </div>
 </div>
@@ -470,8 +470,8 @@ $$<p>This is bad because it means that we have to:</p>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 3.43 s, sys: 0 ns, total: 3.43 s
-Wall time: 3.45 s
+<pre>CPU times: user 1.81 s, sys: 0 ns, total: 1.81 s
+Wall time: 1.82 s
 </pre>
 </div>
 </div>
@@ -496,7 +496,7 @@ Wall time: 3.45 s
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It now takes ~4s vs. ~100µs ... Obviously, we need a better way.</p>
+<p>It now takes ~2s vs. ~30µs ... Obviously, we need a better way.</p>
 
 </div>
 </div>
@@ -599,8 +599,8 @@ $$<p>Now, the summation for each iteration is gone, which makes our solution's t
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 839 ms, sys: 4.28 ms, total: 843 ms
-Wall time: 847 ms
+<pre>CPU times: user 356 ms, sys: 985 µs, total: 357 ms
+Wall time: 358 ms
 </pre>
 </div>
 </div>
@@ -625,7 +625,7 @@ Wall time: 847 ms
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now it's ~900ms! Not bad!</p>
+<p>Now it's ~400ms! Not bad!</p>
 
 </div>
 </div>
@@ -870,8 +870,8 @@ $$<p>Let's try to solve it for 1,000 integers again first:</p>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 11.5 ms, sys: 1.02 ms, total: 12.5 ms
-Wall time: 11.7 ms
+<pre>CPU times: user 2.93 ms, sys: 0 ns, total: 2.93 ms
+Wall time: 2.94 ms
 </pre>
 </div>
 </div>
@@ -896,7 +896,7 @@ Wall time: 11.7 ms
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>~900ms -&gt; 11.7ms 💪💪💪💪💪💪</p>
+<p>~400ms -&gt; 2.94ms 💪💪💪💪💪💪</p>
 <p>Let's run it with 1,000,000 integers now:</p>
 
 </div>
@@ -932,8 +932,8 @@ Wall time: 11.7 ms
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>CPU times: user 4.24 s, sys: 22.3 ms, total: 4.26 s
-Wall time: 4.28 s
+<pre>CPU times: user 2.68 s, sys: 20.4 ms, total: 2.7 s
+Wall time: 2.71 s
 </pre>
 </div>
 </div>
@@ -959,7 +959,7 @@ Wall time: 4.28 s
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="https://i.imgur.com/b5XAuT7.gif" alt="Magic"></p>
-<p>It ran, and it finished in 4.28s!</p>
+<p>It ran, and it finished in 2.71s!</p>
 <p>I hope you find this post helpful.</p>
 
 </div>
