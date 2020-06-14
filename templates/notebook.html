@@ -1,9 +1,13 @@
 {% extends "layout.html" %}
 {% block title %}{{ notebook.title }} | {{ super() }}{% endblock %}
 {% block content %}
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$']]}});
+</script>
 <link rel="stylesheet" type="text/css" href="https://rawgit.com/richleland/pygments-css/master/friendly.css" />
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
 <style type="text/css">
  .cell .input, .cell .output_area { display: flex; flex-wrap: nowrap; }
  .cell .prompt { flex-basis: 70px; min-width: 70px; text-align: right; padding-right: 10px; font-family: monospace; }
@@ -23,18 +27,24 @@
 </style>
 <a class="header" href="{{ notebook.path }}">
   <img src="{{ notebook.cover }}" alt="{{ notebook.title }}" />
-  <div class="title">{{ notebook.title }} ({{ notebook.date.strftime('%Y-%m-%d') }})</div>
+  <div class="container">
+    <div class="title">{{ notebook.title }} ({{ notebook.date.strftime('%Y-%m-%d') }})</div>
+  </div>
 </a>
 <div class="notebook">
-  {{ notebook.html | safe }}
+  <div class="container">
+    {{ notebook.html | safe }}
+  </div>
   <script>
    // HACK: table CSS fix for pandas
-   $('table.dataframe').addClass('table').addClass('table-sm').addClass('table-striped').addClass('table-hover');
-   $('table.dataframe thead').addClass('thead-light');
+   $('table').addClass('table').addClass('table-sm').addClass('table-striped').addClass('table-hover');
+   $('table thead').addClass('thead-light');
   </script>
 </div>
 <!-- Disqus -->
-<div id="disqus_thread"></div>
+<div class="container">
+  <div id="disqus_thread"></div>
+</div>
 <script>
 
  /**
