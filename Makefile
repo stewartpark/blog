@@ -6,6 +6,9 @@ gen:
 run:
 	python -m http.server --directory docs/ 8080
 
+watch:
+	while true; do make gen; sleep 1; done
+
 deploy:
 	rm -rf docs/*.html docs/{assets,notebooks,tags}
 	python -m generator

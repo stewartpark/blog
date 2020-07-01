@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="Stewart Park" />
+    <meta name="keywords" content="algorithms,announcement,c-hjkl,convex hull trick,key remapping,static website generator" />
+    <title>Key Remapping on Wayland | Stewart Park's Blog</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style type="text/css">
+     html, body, .screen { height: 100%; }
+     .screen { margin-left: 280px; }
+     .nav {
+       position: fixed;
+       left: 0;
+       height: 100%;
+       width: 280px;
+       padding: 30px;
+       background-color: white;
+       box-shadow: inset -5px 0 10px -5px rgba(0,0,0,0.6);
+     }
+     .nav .info { text-align: center; width: 100%;  height: auto; }
+     .nav .info .me {
+       margin: 30px 0 15px 0;
+       width: 150px;
+       height: 150px;
+       border-radius: 150px;
+     }
+     .nav .info .name {
+       font-size: 1.5rem;
+       font-weight: bold;
+       color: black;
+       text-decoration: none;
+     }
+     .nav .info .bio {
+       font-size: 0.875rem;
+     }
+
+     @media (max-width: 992px) {
+       .screen { margin-left: 0; }
+       .nav { width: 100%; height: auto; position: unset; }
+     }
+
+     .header {
+       width: 100%;
+       display: block;
+       margin: 0;
+       height: 200px;
+     }
+     .header img {
+       width: 100%;
+       height: 200px;
+       object-fit: cover;
+     }
+     .header .title {
+       position: relative;
+       top: -50px;
+       color: white;
+       text-shadow: 2px 2px #000;
+       font-size: 2rem;
+       padding-left: 20px;
+     }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="screen">
+      <div class="nav">
+        <div class="info">
+          <a href="/">
+            <div class="name">Stewart's Blog</div>
+            <img src="https://avatars2.githubusercontent.com/u/388348" class="me" alt="" />
+          </a>
+          <div class="bio">
+            <p>I'm Stewart Park, a self-taught software engineer, and this is where I write about random stuff.</p>
+            <a href="/">Notebooks</a>
+            |
+            <a href="https://github.com/stewartpark" target="_blank">Github</a>
+            |
+            <a href="https://www.linkedin.com/in/hellojyp/" target="_blank">LinkedIn</a>
+          </div>
+        </div>
+        <div class="tags">
+          <div class="title">Tags</div>
+          
+          <a href="/tags/algorithms.html">algorithms</a>
+          
+          <a href="/tags/announcement.html">announcement</a>
+          
+          <a href="/tags/c-hjkl.html">c-hjkl</a>
+          
+          <a href="/tags/convex hull trick.html">convex hull trick</a>
+          
+          <a href="/tags/key remapping.html">key remapping</a>
+          
+          <a href="/tags/static website generator.html">static website generator</a>
+          
+        </div>
+      </div>
+      <div class="content">
+        
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$']]}});
+</script>
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/richleland/pygments-css/master/friendly.css" />
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<style type="text/css">
+ .cell .input, .cell .output_area { display: flex; flex-wrap: nowrap; }
+ .cell .prompt { flex-basis: 70px; min-width: 70px; text-align: right; padding-right: 10px; font-family: monospace; }
+ .cell .inner_cell { flex-basis: auto; width: 100%; }
+ .cell .output_html { width: auto; }
+
+ .cell .input .prompt { color: #303F9F; }
+ .cell .output_area .prompt { color: #D84315; }
+
+ .celltag_hidden { display: none; }
+ .celltag_input_hidden > .input { display: none; }
+ .celltag_output_hidden > .output_wrapper { display: none; }
+ .notebook {
+   padding: 20px;
+ }
+ #disqus_thread { margin: 20px; }
+</style>
+<a class="header" href="/notebooks/key-remapping-on-wayland.html">
+  <img src="https://i.imgur.com/9IIsZ10.png" alt="Key Remapping on Wayland" />
+  <div class="container">
+    <div class="title">Key Remapping on Wayland (2020-07-01)</div>
+  </div>
+</a>
+<div class="notebook">
+  <div class="container">
+    <div class="cell border-box-sizing code_cell rendered celltag_hidden">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># TITLE: Key Remapping on Wayland</span>
+<span class="c1"># COVER: https://i.imgur.com/9IIsZ10.png</span>
+<span class="c1"># DATE: 2020-07-01</span>
+<span class="c1"># TAGS: key remapping,c-hjkl</span>
+<span class="kn">import</span> <span class="nn">graphviz</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Investing in keyboards has been one of my favorite productivity hacks as a programmer and also a hobby for quite some time. What I currently use is the HHKB(Happy Hacking Keyboard). I love the light touch and the quiet yet satisfying keystroke sound this keyboard makes. If you want one for yourself, this seems to be one of the most recent product of theirs: <a href="https://www.amazon.com/HHKB-Professional-Hybrid-Type-S-PD-KB800BS/dp/B082TYNNL2">Amazon Link</a></p>
+<p>Even though I've been loving this keyboard for many years, there is one minor problem with this one. This keyboard doesn't have arrow keys! As an emacs user, I don't need arrow keys as much as one would need on more modern code editors, but this is still a problem because emacs isn't the only application I run on my computer. The arrow keys hidden behind the fn key makes web browsing/gaming painful.</p>
+<p>While I was looking for a solution for this problem when I first bought this keyboard, I realized that a lot of people tend to remap keys like Ctrl + h/j/k/l to arrow keys so that the arrow keys are more accessible. Among the solutions I found on Google, I chose to use <a href="https://github.com/autokey/autokey">AutoKey</a> because other solutions seemed either too complex or fragile to my taste. It wasn't perfect but it worked for me for a while. All you have to do is just to define macros in Python for each key combination you want to override.</p>
+<p>However, this happy path didn't last forever. It stopped working right after I switched from Xorg to Wayland. AutoKey doesn't support Wayland as of today (2020/07/01), and it seemed like there aren't any alternatives that satisfy my needs. So really the options I had at that point were either to go back to Xorg, or to improvise. And of course, I chose to improvise! I wrote a simple Rust application that intercepts all keyboard events and replaces it with the combination I want, and replays it onto a virtual keyboard (uinput).</p>
+<p>Here's the link to the Github repository if you want to check it out: <a href="https://github.com/stewartpark/c-hjkl">https://github.com/stewartpark/c-hjkl</a></p>
+<p>The following diagram explains the gist of how this application works:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered celltag_input_hidden">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">graphviz</span><span class="o">.</span><span class="n">Source</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">digraph {</span>
+<span class="s2"> start -&gt; enumerate_keyboards -&gt; spin_up_threads -&gt; join_threads -&gt; end;</span>
+<span class="s2"> thread1 -&gt; create_uinput1 -&gt; grab_events1 -&gt; read_events1 -&gt; if1;</span>
+<span class="s2"> </span>
+<span class="s2"> if1 -&gt; replace_events1 [label=&quot;True&quot;];</span>
+<span class="s2"> if1 -&gt; replay_events1 [label=&quot;False&quot;];</span>
+<span class="s2"> replace_events1 -&gt; replay_events1;</span>
+<span class="s2"> replay_events1 -&gt; read_events1 [label=&quot;Repeat forever&quot;];</span>
+<span class="s2"> </span>
+<span class="s2"> start[label=&quot;Start&quot;]; end[label=&quot;End&quot;];</span>
+<span class="s2"> join_threads[shape=&quot;rectangle&quot;,label=&quot;Wait for all threads to finish</span><span class="se">\n</span><span class="s2">(Which won&#39;t happen)&quot;];</span>
+<span class="s2"> enumerate_keyboards[shape=&quot;rectangle&quot;,label=&quot;Parse /proc/bus/input/devices and </span><span class="se">\n</span><span class="s2">enumerate all keyboards&quot;];</span>
+<span class="s2"> spin_up_threads[shape=&quot;rectangle&quot;,label=&quot;Spawn a thread for each keyboard detected&quot;];</span>
+<span class="s2"> thread1[label=&quot;Thread: Start&quot;];</span>
+<span class="s2"> create_uinput1[shape=rectangle,label=&quot;Create a uinput device</span><span class="se">\n</span><span class="s2">(the virtual keyboard)&quot;];</span>
+<span class="s2"> grab_events1[shape=&quot;rectangle&quot;,label=&quot;Gain exclusive access to the physical</span><span class="se">\n</span><span class="s2">keyboard (/dev/input/...) by invoking ioctl(EVIOCGRAB)&quot;];</span>
+<span class="s2"> read_events1[shape=rectangle,label=&quot;Read a keyboard event from the physical keyboard&quot;];</span>
+<span class="s2"> if1[shape=diamond,label=&quot;If the event is Ctrl+h/j/k/l&quot;];</span>
+<span class="s2"> replace_events1[shape=rectangle,label=&quot;Replace the event with an arrow key event&quot;];</span>
+<span class="s2"> replay_events1[shape=rectangle,label=&quot;Replay the event on the virtual keyboard&quot;];</span>
+<span class="s2">}</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[2]:</div>
+
+
+
+<div class="output_svg output_subarea output_execute_result">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.42.4 (0)
+ -->
+<!-- Pages: 1 -->
+<svg width="641pt" height="502pt"
+ viewBox="0.00 0.00 640.50 502.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 498)">
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-498 636.5,-498 636.5,4 -4,4"/>
+<!-- start -->
+<g id="node1" class="node">
+<title>start</title>
+<ellipse fill="none" stroke="black" cx="125.5" cy="-476" rx="27.1" ry="18"/>
+<text text-anchor="middle" x="125.5" y="-472.3" font-family="Times,serif" font-size="14.00">Start</text>
+</g>
+<!-- enumerate_keyboards -->
+<g id="node2" class="node">
+<title>enumerate_keyboards</title>
+<polygon fill="none" stroke="black" points="227,-421 24,-421 24,-383 227,-383 227,-421"/>
+<text text-anchor="middle" x="125.5" y="-405.8" font-family="Times,serif" font-size="14.00">Parse /proc/bus/input/devices and </text>
+<text text-anchor="middle" x="125.5" y="-390.8" font-family="Times,serif" font-size="14.00">enumerate all keyboards</text>
+</g>
+<!-- start&#45;&gt;enumerate_keyboards -->
+<g id="edge1" class="edge">
+<title>start&#45;&gt;enumerate_keyboards</title>
+<path fill="none" stroke="black" d="M125.5,-457.94C125.5,-449.99 125.5,-440.31 125.5,-431.31"/>
+<polygon fill="black" stroke="black" points="129,-431.2 125.5,-421.2 122,-431.2 129,-431.2"/>
+</g>
+<!-- spin_up_threads -->
+<g id="node3" class="node">
+<title>spin_up_threads</title>
+<polygon fill="none" stroke="black" points="251,-345 0,-345 0,-309 251,-309 251,-345"/>
+<text text-anchor="middle" x="125.5" y="-323.3" font-family="Times,serif" font-size="14.00">Spawn a thread for each keyboard detected</text>
+</g>
+<!-- enumerate_keyboards&#45;&gt;spin_up_threads -->
+<g id="edge2" class="edge">
+<title>enumerate_keyboards&#45;&gt;spin_up_threads</title>
+<path fill="none" stroke="black" d="M125.5,-382.96C125.5,-374.7 125.5,-364.74 125.5,-355.57"/>
+<polygon fill="black" stroke="black" points="129,-355.33 125.5,-345.33 122,-355.33 129,-355.33"/>
+</g>
+<!-- join_threads -->
+<g id="node4" class="node">
+<title>join_threads</title>
+<polygon fill="none" stroke="black" points="211,-271 40,-271 40,-233 211,-233 211,-271"/>
+<text text-anchor="middle" x="125.5" y="-255.8" font-family="Times,serif" font-size="14.00">Wait for all threads to finish</text>
+<text text-anchor="middle" x="125.5" y="-240.8" font-family="Times,serif" font-size="14.00">(Which won&#39;t happen)</text>
+</g>
+<!-- spin_up_threads&#45;&gt;join_threads -->
+<g id="edge3" class="edge">
+<title>spin_up_threads&#45;&gt;join_threads</title>
+<path fill="none" stroke="black" d="M125.5,-308.7C125.5,-300.49 125.5,-290.47 125.5,-281.2"/>
+<polygon fill="black" stroke="black" points="129,-281.19 125.5,-271.19 122,-281.19 129,-281.19"/>
+</g>
+<!-- end -->
+<g id="node5" class="node">
+<title>end</title>
+<ellipse fill="none" stroke="black" cx="125.5" cy="-178" rx="27" ry="18"/>
+<text text-anchor="middle" x="125.5" y="-174.3" font-family="Times,serif" font-size="14.00">End</text>
+</g>
+<!-- join_threads&#45;&gt;end -->
+<g id="edge4" class="edge">
+<title>join_threads&#45;&gt;end</title>
+<path fill="none" stroke="black" d="M125.5,-232.83C125.5,-224.89 125.5,-215.41 125.5,-206.63"/>
+<polygon fill="black" stroke="black" points="129,-206.42 125.5,-196.42 122,-206.42 129,-206.42"/>
+</g>
+<!-- thread1 -->
+<g id="node6" class="node">
+<title>thread1</title>
+<ellipse fill="none" stroke="black" cx="461.5" cy="-476" rx="57.39" ry="18"/>
+<text text-anchor="middle" x="461.5" y="-472.3" font-family="Times,serif" font-size="14.00">Thread: Start</text>
+</g>
+<!-- create_uinput1 -->
+<g id="node7" class="node">
+<title>create_uinput1</title>
+<polygon fill="none" stroke="black" points="531,-421 392,-421 392,-383 531,-383 531,-421"/>
+<text text-anchor="middle" x="461.5" y="-405.8" font-family="Times,serif" font-size="14.00">Create a uinput device</text>
+<text text-anchor="middle" x="461.5" y="-390.8" font-family="Times,serif" font-size="14.00">(the virtual keyboard)</text>
+</g>
+<!-- thread1&#45;&gt;create_uinput1 -->
+<g id="edge5" class="edge">
+<title>thread1&#45;&gt;create_uinput1</title>
+<path fill="none" stroke="black" d="M461.5,-457.94C461.5,-449.99 461.5,-440.31 461.5,-431.31"/>
+<polygon fill="black" stroke="black" points="465,-431.2 461.5,-421.2 458,-431.2 465,-431.2"/>
+</g>
+<!-- grab_events1 -->
+<g id="node8" class="node">
+<title>grab_events1</title>
+<polygon fill="none" stroke="black" points="628.5,-346 294.5,-346 294.5,-308 628.5,-308 628.5,-346"/>
+<text text-anchor="middle" x="461.5" y="-330.8" font-family="Times,serif" font-size="14.00">Gain exclusive access to the physical</text>
+<text text-anchor="middle" x="461.5" y="-315.8" font-family="Times,serif" font-size="14.00">keyboard (/dev/input/...) by invoking ioctl(EVIOCGRAB)</text>
+</g>
+<!-- create_uinput1&#45;&gt;grab_events1 -->
+<g id="edge6" class="edge">
+<title>create_uinput1&#45;&gt;grab_events1</title>
+<path fill="none" stroke="black" d="M461.5,-382.96C461.5,-374.88 461.5,-365.18 461.5,-356.18"/>
+<polygon fill="black" stroke="black" points="465,-356.09 461.5,-346.09 458,-356.09 465,-356.09"/>
+</g>
+<!-- read_events1 -->
+<g id="node9" class="node">
+<title>read_events1</title>
+<polygon fill="none" stroke="black" points="609,-270 314,-270 314,-234 609,-234 609,-270"/>
+<text text-anchor="middle" x="461.5" y="-248.3" font-family="Times,serif" font-size="14.00">Read a keyboard event from the physical keyboard</text>
+</g>
+<!-- grab_events1&#45;&gt;read_events1 -->
+<g id="edge7" class="edge">
+<title>grab_events1&#45;&gt;read_events1</title>
+<path fill="none" stroke="black" d="M461.5,-307.96C461.5,-299.7 461.5,-289.74 461.5,-280.57"/>
+<polygon fill="black" stroke="black" points="465,-280.33 461.5,-270.33 458,-280.33 465,-280.33"/>
+</g>
+<!-- if1 -->
+<g id="node10" class="node">
+<title>if1</title>
+<polygon fill="none" stroke="black" points="387.5,-196 243.38,-178 387.5,-160 531.62,-178 387.5,-196"/>
+<text text-anchor="middle" x="387.5" y="-174.3" font-family="Times,serif" font-size="14.00">If the event is Ctrl+h/j/k/l</text>
+</g>
+<!-- read_events1&#45;&gt;if1 -->
+<g id="edge8" class="edge">
+<title>read_events1&#45;&gt;if1</title>
+<path fill="none" stroke="black" d="M443.96,-233.94C434.06,-224.3 421.55,-212.13 410.83,-201.7"/>
+<polygon fill="black" stroke="black" points="413.01,-198.93 403.4,-194.47 408.12,-203.95 413.01,-198.93"/>
+</g>
+<!-- replace_events1 -->
+<g id="node11" class="node">
+<title>replace_events1</title>
+<polygon fill="none" stroke="black" points="466,-109 217,-109 217,-73 466,-73 466,-109"/>
+<text text-anchor="middle" x="341.5" y="-87.3" font-family="Times,serif" font-size="14.00">Replace the event with an arrow key event</text>
+</g>
+<!-- if1&#45;&gt;replace_events1 -->
+<g id="edge9" class="edge">
+<title>if1&#45;&gt;replace_events1</title>
+<path fill="none" stroke="black" d="M378.85,-161.01C372.33,-148.98 363.27,-132.22 355.7,-118.23"/>
+<polygon fill="black" stroke="black" points="358.58,-116.21 350.74,-109.08 352.43,-119.54 358.58,-116.21"/>
+<text text-anchor="middle" x="380.5" y="-130.8" font-family="Times,serif" font-size="14.00">True</text>
+</g>
+<!-- replay_events1 -->
+<g id="node12" class="node">
+<title>replay_events1</title>
+<polygon fill="none" stroke="black" points="622,-36 383,-36 383,0 622,0 622,-36"/>
+<text text-anchor="middle" x="502.5" y="-14.3" font-family="Times,serif" font-size="14.00">Replay the event on the virtual keyboard</text>
+</g>
+<!-- if1&#45;&gt;replay_events1 -->
+<g id="edge10" class="edge">
+<title>if1&#45;&gt;replay_events1</title>
+<path fill="none" stroke="black" d="M412.67,-163.13C432.17,-151.17 458.48,-132.19 474.5,-109 487.47,-90.23 494.61,-65.21 498.44,-46.32"/>
+<polygon fill="black" stroke="black" points="501.92,-46.73 500.28,-36.26 495.03,-45.47 501.92,-46.73"/>
+<text text-anchor="middle" x="506" y="-87.3" font-family="Times,serif" font-size="14.00">False</text>
+</g>
+<!-- replace_events1&#45;&gt;replay_events1 -->
+<g id="edge11" class="edge">
+<title>replace_events1&#45;&gt;replay_events1</title>
+<path fill="none" stroke="black" d="M380.06,-72.99C402.4,-63.14 430.72,-50.66 454.49,-40.17"/>
+<polygon fill="black" stroke="black" points="455.96,-43.35 463.69,-36.11 453.13,-36.95 455.96,-43.35"/>
+</g>
+<!-- replay_events1&#45;&gt;read_events1 -->
+<g id="edge12" class="edge">
+<title>replay_events1&#45;&gt;read_events1</title>
+<path fill="none" stroke="black" d="M513.37,-36.11C532.72,-68.93 568.58,-142.23 540.5,-196 533.52,-209.36 521.66,-220.13 509.21,-228.48"/>
+<polygon fill="black" stroke="black" points="507.19,-225.62 500.56,-233.88 510.9,-231.56 507.19,-225.62"/>
+<text text-anchor="middle" x="592" y="-130.8" font-family="Times,serif" font-size="14.00">Repeat forever</text>
+</g>
+</g>
+</svg>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I made this as a systemd service on my laptop and it's been working great. There are some annoying things I want to fix later, like having to restart the service if you plug in a new keyboard, etc, but I'm pretty happy with what I have right now. It even works on console!</p>
+<p>Right now there isn't a nice way for others to install this, so that's another thing to do in my list.</p>
+<p>I hope you enjoyed my unusual solution to the key remapping problem on Linux.</p>
+
+</div>
+</div>
+</div>
+ 
+
+
+  </div>
+  <script>
+   // HACK: table CSS fix for pandas
+   $('table').addClass('table').addClass('table-sm').addClass('table-striped').addClass('table-hover');
+   $('table thead').addClass('thead-light');
+  </script>
+</div>
+<!-- Disqus -->
+<div class="container">
+  <div id="disqus_thread"></div>
+</div>
+<script>
+
+ /**
+  *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+  *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+ /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+  */
+ (function() { // DON'T EDIT BELOW THIS LINE
+   var d = document, s = d.createElement('script');
+   s.src = 'https://stewartpark.disqus.com/embed.js';
+   s.setAttribute('data-timestamp', +new Date());
+   (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  </body>
+</html>

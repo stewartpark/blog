@@ -45,29 +45,18 @@ def read_notebooks():
     notebooks = list(reversed(sorted(notebooks, key=lambda x: x['date'])))
     return notebooks
 
-def create_directories():
+def mkdir(path):
     try:
-        os.mkdir('docs')
-    except:
-        pass
-    try:
-        os.mkdir('docs/notebooks')
-    except:
-        pass
-    try:
-        os.mkdir('docs/tags')
-    except:
-        pass
-    try:
-        os.mkdir('docs/assets')
+        os.mkdir(path)
     except:
         pass
 
-    
+
 if __name__ == '__main__':
     notebooks = read_notebooks()
     tags = sorted(list(set(reduce(lambda a, b: a + b, [x['tags'] for x in notebooks]))))
-    create_directories()
+    for path in ['docs', 'docs/notebooks', 'docs/tags', 'docs/assets']:
+        mkdir(path)
     env = Environment(loader=FileSystemLoader(("templates/")))
     context = { 'notebooks': notebooks, 'tags': tags }
     # Index
