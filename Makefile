@@ -6,8 +6,11 @@ gen:
 run:
 	python -m http.server --directory docs/ 8080
 
-watch:
-	while true; do make gen; sleep 1; done
+dev:
+	TMUX= tmux \
+		  new-session 'while true; do make gen; sleep 1; done' \; \
+		  split-window 'python -m http.server --directory docs/ 8080' \; \
+		  split-window 'jupyter notebook'
 
 deploy:
 	rm -rf docs/*.html docs/{assets,notebooks,tags}
