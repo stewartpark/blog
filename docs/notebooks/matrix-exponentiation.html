@@ -359,7 +359,7 @@ $$
 $$
 a^b = \begin{cases}
 1 &amp; \text{if $b = 0$} \\
-a^{\lfloor b/2 \rfloor} a^{\lfloor b/2 \rfloor} &amp; \text{if $b$ is an even number} \\
+a^{b/2} a^{b/2} &amp; \text{if $b$ is an even number} \\
 a^{\lfloor b/2 \rfloor} a^{\lfloor b/2 \rfloor} a &amp; \text{if $b$ is an odd number}
 \end{cases}
 $$<p>With the above, instead of doing the multiplication $n$ times, you can do it only $\log_{2}{n}$ times, which makes it the time complexity of $O(\log n)$.</p>
