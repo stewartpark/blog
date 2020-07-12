@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="author" content="Stewart Park" />
+    <meta name="keywords" content="algorithms,announcement,c-hjkl,convex hull trick,key remapping,static website generator" />
+    <title>Fast Fibonacci Sequence with Matrix Exponentiation | Stewart Park's Blog</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style type="text/css">
+     html, body, .screen { height: 100%; }
+     .screen { margin-left: 280px; }
+     .nav {
+       position: fixed;
+       left: 0;
+       height: 100%;
+       width: 280px;
+       padding: 30px;
+       background-color: white;
+       box-shadow: inset -5px 0 10px -5px rgba(0,0,0,0.6);
+     }
+     .nav .info { text-align: center; width: 100%;  height: auto; }
+     .nav .info .me {
+       margin: 30px 0 15px 0;
+       width: 150px;
+       height: 150px;
+       border-radius: 150px;
+     }
+     .nav .info .name {
+       font-size: 1.5rem;
+       font-weight: bold;
+       color: black;
+       text-decoration: none;
+     }
+     .nav .info .bio {
+       font-size: 0.875rem;
+     }
+
+     @media (max-width: 992px) {
+       .screen { margin-left: 0; }
+       .nav { width: 100%; height: auto; position: unset; }
+     }
+
+     .header {
+       width: 100%;
+       display: block;
+       margin: 0;
+       height: 200px;
+     }
+     .header img {
+       width: 100%;
+       height: 200px;
+       object-fit: cover;
+     }
+     .header .title {
+       position: relative;
+       top: -50px;
+       color: white;
+       text-shadow: 2px 2px #000;
+       font-size: 2rem;
+       padding-left: 20px;
+     }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="screen">
+      <div class="nav">
+        <div class="info">
+          <a href="/">
+            <div class="name">Stewart's Blog</div>
+            <img src="https://avatars2.githubusercontent.com/u/388348" class="me" alt="" />
+          </a>
+          <div class="bio">
+            <p>I'm Stewart Park, a self-taught software engineer, and this is where I write about random stuff.</p>
+            <a href="/">Notebooks</a>
+            |
+            <a href="https://github.com/stewartpark" target="_blank">Github</a>
+            |
+            <a href="https://www.linkedin.com/in/hellojyp/" target="_blank">LinkedIn</a>
+          </div>
+        </div>
+        <div class="tags">
+          <div class="title">Tags</div>
+          
+          <a href="/tags/algorithms.html">algorithms</a>
+          
+          <a href="/tags/announcement.html">announcement</a>
+          
+          <a href="/tags/c-hjkl.html">c-hjkl</a>
+          
+          <a href="/tags/convex hull trick.html">convex hull trick</a>
+          
+          <a href="/tags/key remapping.html">key remapping</a>
+          
+          <a href="/tags/static website generator.html">static website generator</a>
+          
+        </div>
+      </div>
+      <div class="content">
+        
+<script type="text/x-mathjax-config">
+ MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$']]}});
+</script>
+<link rel="stylesheet" type="text/css" href="https://rawgit.com/richleland/pygments-css/master/friendly.css" />
+<script type="text/javascript" async
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<style type="text/css">
+ .cell .input, .cell .output_area { display: flex; flex-wrap: nowrap; }
+ .cell .prompt { flex-basis: 70px; min-width: 70px; text-align: right; padding-right: 10px; font-family: monospace; }
+ .cell .inner_cell { flex-basis: auto; width: 100%; }
+ .cell .output_html { width: auto; }
+
+ .cell .input .prompt { color: #303F9F; }
+ .cell .output_area .prompt { color: #D84315; }
+ .cell .output_svg svg { max-width: 100%; }
+
+ .celltag_hidden { display: none; }
+ .celltag_input_hidden > .input { display: none; }
+ .celltag_output_hidden > .output_wrapper { display: none; }
+ .notebook {
+   padding: 20px;
+ }
+ #disqus_thread { margin: 20px; }
+</style>
+<a class="header" href="/notebooks/matrix-exponentiation.html">
+  <img src="https://i.imgur.com/VM8Y3MM.gif" alt="Fast Fibonacci Sequence with Matrix Exponentiation" />
+  <div class="container">
+    <div class="title">Fast Fibonacci Sequence with Matrix Exponentiation (2020-07-12)</div>
+  </div>
+</a>
+<div class="notebook">
+  <div class="container">
+    <div class="cell border-box-sizing code_cell rendered celltag_hidden">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># TITLE: Fast Fibonacci Sequence with Matrix Exponentiation</span>
+<span class="c1"># COVER: https://i.imgur.com/VM8Y3MM.gif</span>
+<span class="c1"># DATE: 2020-07-12</span>
+<span class="c1"># TAGS: algorithms, matrix exponentiation</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Matrix exponentiation is a technique that solves a linear recurrence relation in an $O(\log n)$ time, instead of $O(n)$.</p>
+<p>A linear recurrence relation is an equation that has the following form:</p>
+$$
+x_n = c_1 x_{n-1} + c_2 x_{n-2} + \ldots + c_k x_{n-k}
+$$<p>A well known example of such relation is the Fibonacci sequence:</p>
+$$
+\begin{align*}
+F_0 &amp; = 0 \\
+F_1 &amp; = 1 \\
+F_n &amp; = F_{n-1} + F_{n-2}
+\end{align*}
+$$<p>So in this post, we're going to use the Fibonacci sequence as an example.</p>
+<p>As you can see, to calculate $F_n$, you need to calculate all the previous values in the sequence, which makes its time complexity $O(n)$.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">F_0</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">F_1</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">F_0</span><span class="p">,</span> <span class="n">F_1</span> <span class="o">=</span> <span class="n">F_1</span><span class="p">,</span> <span class="n">F_0</span> <span class="o">+</span> <span class="n">F_1</span>
+    <span class="k">return</span> <span class="n">F_1</span>
+<span class="o">%</span><span class="k">time</span> _ = fib(300_000)
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CPU times: user 1.01 s, sys: 1.9 ms, total: 1.02 s
+Wall time: 1.02 s
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To speed up the above program, all you need to do is the following two things:</p>
+<ul>
+<li>Rewrite the linear recurrence relation into a matrix form (Matrix exponentiation)</li>
+<li>Calculate the exponential part in an $O(\log n)$ time (Divide-and-conquer algorithm)</li>
+</ul>
+<h2 id="Matrix-Exponentiation">Matrix Exponentiation<a class="anchor-link" href="#Matrix-Exponentiation">&#182;</a></h2><p>Recall the following equation of a linear recurrence relation:</p>
+$$
+x_n = c_1 x_{n-1} + c_2 x_{n-2} + \ldots + c_k x_{n-k}
+$$<p>The goal here is to write an equation such that the following can be true:
+$$
+\begin{align*}
+\begin{bmatrix}
+  x_n \\
+  x_{n-1} \\
+  x_{n-2} \\
+  \vdots \\
+  x_{n-k}
+\end{bmatrix}
+&amp;=
+C
+\begin{bmatrix}
+  x_{n-1} \\
+  x_{n-2} \\
+  x_{n-3} \\
+  \vdots \\
+  x_{n-(k+1)}
+\end{bmatrix}
+\end{align*}
+$$</p>
+<p>Getting the matrix $C$ above is pretty trivial since its relation is linear. A linear recurrence relation can be rewritten with matrices as follows:</p>
+$$
+\begin{align*}
+\begin{bmatrix}
+  x_n \\
+  x_{n-1} \\
+  x_{n-2} \\
+  \vdots \\
+  x_{n-k}
+\end{bmatrix}
+&amp;=
+\begin{bmatrix}
+ c_1 &amp; c_2 &amp; \ldots &amp; c_k \\
+ 1 &amp; 0 &amp; \ldots &amp; 0 \\
+ 0 &amp; 1 &amp; \ldots &amp; 0 \\
+ \vdots &amp; \vdots &amp; \ldots &amp; \vdots \\
+ 0 &amp; 0 &amp; \ldots &amp; 1
+\end{bmatrix}
+\begin{bmatrix}
+  x_{n-1} \\
+  x_{n-2} \\
+  x_{n-3} \\
+  \vdots \\
+  x_{n-(k+1)}
+\end{bmatrix}
+\end{align*}
+$$<p>Since now we have a matrix that makes our result matrix one $n$ forward, the below equation becomes also true:</p>
+$$
+\begin{align*}
+\begin{bmatrix}
+  x_n \\
+  x_{n-1} \\
+  x_{n-2} \\
+  \vdots \\
+  x_{n-k}
+\end{bmatrix}
+&amp;=
+\begin{bmatrix}
+ c_1 &amp; c_2 &amp; \ldots &amp; c_k \\
+ 1 &amp; 0 &amp; \ldots &amp; 0 \\
+ 0 &amp; 1 &amp; \ldots &amp; 0 \\
+ \vdots &amp; \vdots &amp; \ldots &amp; \vdots \\
+ 0 &amp; 0 &amp; \ldots &amp; 1
+\end{bmatrix}^{\text{ }2}
+\begin{bmatrix}
+  x_{n-2} \\
+  x_{n-3} \\
+  x_{n-4} \\
+  \vdots \\
+  x_{n-(k+2)}
+\end{bmatrix} \\
+&amp;=
+\begin{bmatrix}
+ c_1 &amp; c_2 &amp; \ldots &amp; c_k \\
+ 1 &amp; 0 &amp; \ldots &amp; 0 \\
+ 0 &amp; 1 &amp; \ldots &amp; 0 \\
+ \vdots &amp; \vdots &amp; \ldots &amp; \vdots \\
+ 0 &amp; 0 &amp; \ldots &amp; 1
+\end{bmatrix}^{\text{ }3}
+\begin{bmatrix}
+  x_{n-3} \\
+  x_{n-4} \\
+  x_{n-5} \\
+  \vdots \\
+  x_{n-(k+3)}
+\end{bmatrix} \\
+&amp; \vdots \\
+&amp;=
+\begin{bmatrix}
+ c_1 &amp; c_2 &amp; \ldots &amp; c_k \\
+ 1 &amp; 0 &amp; \ldots &amp; 0 \\
+ 0 &amp; 1 &amp; \ldots &amp; 0 \\
+ \vdots &amp; \vdots &amp; \ldots &amp; \vdots \\
+ 0 &amp; 0 &amp; \ldots &amp; 1
+\end{bmatrix}^{\text{ }n}
+\begin{bmatrix}
+  x_{k} \\
+  x_{k-1} \\
+  x_{k-2} \\
+  \vdots \\
+  x_{1}
+\end{bmatrix} 
+\end{align*}
+$$<p>In a linear recurrence relation, the necessary  initial values ${x_1, \ldots, x_k}$ are given. So if we know the value of $C^n$, we no longer require the previous values!</p>
+<p>So if we plug our Fibonacci sequence example with the above, we get:</p>
+$$
+\begin{align*}
+\begin{bmatrix}
+  F_n \\
+  F_{n-1}
+\end{bmatrix}
+&amp;=
+\begin{bmatrix}
+ 1 &amp; 1 \\
+ 1 &amp; 0
+\end{bmatrix}
+\begin{bmatrix}
+  F_{n-1} \\
+  F_{n-2}
+\end{bmatrix} \\
+&amp;=
+\begin{bmatrix}
+ 1 &amp; 1 \\
+ 1 &amp; 0
+\end{bmatrix}^{\text{ }n}
+\begin{bmatrix}
+  0 \\
+  1
+\end{bmatrix}
+\end{align*}
+$$
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>But as you can see, we still have to compute $n$ times to calculate $C^n$. That's why we have to talk about a way to calculate an exponential in a logarithmic time by using a divide-and-conquer algorithm.</p>
+<h2 id="Fast-Exponentiation">Fast Exponentiation<a class="anchor-link" href="#Fast-Exponentiation">&#182;</a></h2><p>The idea is very simple. Since matrix multiplication has associativity, we can divide the calculation as follows:</p>
+$$
+a^b = \begin{cases}
+1 &amp; \text{if $b = 0$} \\
+a^{b/2} a^{b/2} &amp; \text{if $b$ is an even number} \\
+a^{b/2} a^{b/2} a &amp; \text{if $b$ is an odd number}
+\end{cases}
+$$<p>With the above, instead of doing the multiplication $n$ times, you can do it only $\log_{2}{n}$ times, which makes it the time complexity of $O(\log n)$.</p>
+<p>Here's the Python version of the above equation:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">pow</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">v</span> <span class="o">*</span> <span class="n">v</span>
+        <span class="k">if</span> <span class="n">b</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">*=</span> <span class="n">a</span>
+    <span class="k">return</span> <span class="n">c</span>
+
+<span class="nb">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[2]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1024</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Fast-Fibonacci-Sequence">Fast Fibonacci Sequence<a class="anchor-link" href="#Fast-Fibonacci-Sequence">&#182;</a></h2><p>Now that we have all the tools we need in our hands, let's write a program that calculates the $n$th Fibonacci sequence number in an $O(\log n)$ time.</p>
+<p>Let's first define functions to calculate matrices in the equation. Of course, if you're not in a competitive programming setup, you can just use numpy.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">matmul21</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="p">[</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span> 
+        <span class="p">[</span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="p">]</span>
+
+<span class="k">def</span> <span class="nf">matmul22</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="p">[</span><span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]],</span>
+        <span class="p">[</span><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">B</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span>
+    <span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's write a power function that uses a divide-and-conquer algorithm:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">matpow22</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span> <span class="c1"># 2x2 Identity matrix</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">matpow22</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">matmul22</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">b</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">matmul22</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">c</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And now the Fibonacci sequence computation part is just simply:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">C</span>        <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+            <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="n">F_initial</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">0</span><span class="p">],</span>
+             <span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+
+<span class="k">def</span> <span class="nf">fib_fast</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">matmul21</span><span class="p">(</span><span class="n">matpow22</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="n">F_initial</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="o">%</span><span class="k">time</span> _ = fib_fast(300_000)
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>CPU times: user 45.5 ms, sys: 1.04 ms, total: 46.6 ms
+Wall time: 45.5 ms
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>~1100ms -&gt; ~50ms!</p>
+
+</div>
+</div>
+</div>
+ 
+
+
+  </div>
+  <script>
+   // HACK: table CSS fix for pandas
+   $('table').addClass('table').addClass('table-sm').addClass('table-striped').addClass('table-hover');
+   $('table thead').addClass('thead-light');
+  </script>
+</div>
+<!-- Disqus -->
+<div class="container">
+  <div id="disqus_thread"></div>
+</div>
+<script>
+
+ /**
+  *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+  *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables*/
+ /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+  */
+ (function() { // DON'T EDIT BELOW THIS LINE
+   var d = document, s = d.createElement('script');
+   s.src = 'https://stewartpark.disqus.com/embed.js';
+   s.setAttribute('data-timestamp', +new Date());
+   (d.head || d.body).appendChild(s);
+ })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  </body>
+</html>
